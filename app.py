@@ -1,7 +1,9 @@
-from flask import Flask, redirect, render_template, request, url_for, session
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
+
+@app.route("/")
 @app.route("/<name>")
 def index(name="anon"):
     return render_template("index.html", name=name)
