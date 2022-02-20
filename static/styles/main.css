@@ -1,0 +1,11 @@
+.content {
+    background-color: #011;
+    color: #fdc;
+    border: 1px solid #000;
+    margin: 0 auto;
+    width: 10vw;
+    height: 10vh;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1vw;
+    padding: 0.5vw;
+}
