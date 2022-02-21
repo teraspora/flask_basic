@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{{ "Filesystem explorer" }}
+{% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+    <main class="main" data-page="{{ page }}"" data-last="{{ last }}">
+        {% for fn in filenames %}
+            <figure class="image">
+                <img src='{{ url_for("static", filename="imgs/" + fn) }}'>
+                <figcaption>{{ fn }}</figcaption>
+            </figure>
+        {% endfor %}
+    </main>
+{% endblock %}
+
+{% block script %}
+    <script>
+            let imgs = new Set();
+            document.querySelector('main').addEventListener('click', event => {
+                const img_name = event.target.src?.split('/')?.slice(-1)[0];
+                if (img_name != undefined) {
+                    imgs.add(img_name);
+                    console.log(`\n(${[...imgs].join(' ')})\n`);
+                }
+            });
+            const main = document.querySelector('main');
+            const page = ~~main.dataset.page;
+            const last = ~~main.dataset.last;
+            const base_url = location.href.split('?')[0];
+            document.addEventListener('keyup', event => {
+                const key = event.key;
+                let q = '?page=';
+                switch (key) {
+                    case "ArrowLeft":
+                        q += (page - 1) || 1;
+                        break;                
+                    case "ArrowRight":
+                        q += page == last ? page : (page + 1);
+                        break;
+                    case "Home":
+                        q += '1';
+                        break;
+                    case "End":
+                        q += last;
+                        break;
+                    default:
+                        return;
+                }
+                location.href = base_url + q;
+            });
+    </script>
+{% endblock %}
+
+
+
+
+
+
