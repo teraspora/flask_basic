@@ -23,10 +23,18 @@
     <script>
             let imgs = new Set();
             document.querySelector('main').addEventListener('click', event => {
-                const img_name = event.target.src?.split('/')?.slice(-1)[0];
+                const img = event.target;
+                const img_name = img.src?.split('/')?.slice(-1)[0];
                 if (img_name != undefined) {
-                    imgs.add(img_name);
-                    console.log(`\n(${[...imgs].join(' ')})\n`);
+                    const figcaption = img.nextElementSibling;
+                    img.classList.toggle('delete');
+                    figcaption.classList.toggle('delete');
+                    if (img.classList.contains('delete')) {
+                        imgs.add(img_name);
+                    }
+                    else {
+                        imgs.delete(img_name);
+                    }
                 }
             });
             const main = document.querySelector('main');
@@ -49,6 +57,9 @@
                     case "End":
                         q += last;
                         break;
+                    case "p":
+                        console.log(`\n(${[...imgs].join(' ')})\n`);
+                        return;
                     default:
                         return;
                 }
