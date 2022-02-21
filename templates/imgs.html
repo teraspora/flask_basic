@@ -20,56 +20,6 @@
 {% endblock %}
 
 {% block script %}
-    <script>
-            let imgs = new Set();
-            document.querySelector('main').addEventListener('click', event => {
-                const img = event.target;
-                const img_name = img.src?.split('/')?.slice(-1)[0];
-                if (img_name != undefined) {
-                    const figcaption = img.nextElementSibling;
-                    img.classList.toggle('delete');
-                    figcaption.classList.toggle('delete');
-                    if (img.classList.contains('delete')) {
-                        imgs.add(img_name);
-                    }
-                    else {
-                        imgs.delete(img_name);
-                    }
-                }
-            });
-            const main = document.querySelector('main');
-            const page = ~~main.dataset.page;
-            const last = ~~main.dataset.last;
-            const base_url = location.href.split('?')[0];
-            document.addEventListener('keyup', event => {
-                const key = event.key;
-                let q = '?page=';
-                switch (key) {
-                    case "ArrowLeft":
-                        q += (page - 1) || 1;
-                        break;                
-                    case "ArrowRight":
-                        q += page == last ? page : (page + 1);
-                        break;
-                    case "Home":
-                        q += '1';
-                        break;
-                    case "End":
-                        q += last;
-                        break;
-                    case "p":
-                        console.log(`\n(${[...imgs].join(' ')})\n`);
-                        return;
-                    default:
-                        return;
-                }
-                location.href = base_url + q;
-            });
-    </script>
+<script type="text/javascript" src="{{ url_for('static', filename='scripts/main.js') }}"></script>
 {% endblock %}
-
-
-
-
-
 
